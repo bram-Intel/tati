@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="tatiGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#DB2850"/>
+      <stop offset="57%" stop-color="#F57971"/>
+      <stop offset="100%" stop-color="#F27F49"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#tatiGrad)"/>
+  <g transform="translate(32 32)" stroke="#FFF1DD" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M-2 -3 C-8 -16, -21 -15, -19 -3 C-18 3, -9 5, -2 2 Z" fill="#FFF1DD" fill-opacity="0.22"/>
+    <path d="M2 -3 C8 -16, 21 -15, 19 -3 C18 3, 9 5, 2 2 Z" fill="#FFF1DD" fill-opacity="0.22"/>
+    <path d="M-2 3 C-9 6, -16 14, -10 17 C-5 19, -2 12, -1 6 Z" fill="#FFF1DD" fill-opacity="0.18"/>
+    <path d="M2 3 C9 6, 16 14, 10 17 C5 19, 2 12, 1 6 Z" fill="#FFF1DD" fill-opacity="0.18"/>
+    <line x1="0" y1="-8" x2="0" y2="11" stroke="#FFF1DD" stroke-width="2.4"/>
+    <path d="M0 -8 C-2 -13, -5 -15, -7 -16" fill="none"/>
+    <path d="M0 -8 C2 -13, 5 -15, 7 -16" fill="none"/>
+  </g>
+</svg>
