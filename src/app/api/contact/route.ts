@@ -59,7 +59,7 @@ export async function POST(req: Request) {
       emailDispatched: mailResult.dispatched,
       channel: mailResult.channel,
       message: mailResult.dispatched
-        ? "Thank you — your note has been sent to Tati Studio via Zoho Mail."
+        ? "Thank you — your note has been sent to hello@bytatistudio.com via Zoho Mail."
         : storedInFirebase
           ? "Thank you — your inquiry has been saved to Tati Studio Firebase Firestore (add Zoho Mail SMTP env vars on Vercel to send email notifications)."
           : "Note logged in preview mode (connect Firebase & Zoho Mail env vars on Vercel for live inbox delivery).",

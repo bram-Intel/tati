@@ -4,16 +4,16 @@ import React, { useState } from "react";
 import { CustomSelect } from "@/components/ui/CustomSelect";
 
 const CONTACT_TOPICS = [
-  { value: "Order & Styling Inquiry", label: "Styling & Collection Inquiry" },
+  { value: "Styling & Collection Inquiry", label: "Styling & Collection Inquiry" },
   { value: "Bespoke Charm Combination", label: "Bespoke Charm Combination" },
   { value: "Press & Stockists", label: "Press & Stockists" },
-  { value: "Shipping & Returns", label: "Launch & Availability" },
+  { value: "Launch & Availability", label: "Launch & Availability" },
 ];
 
 export function ContactFormClient() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [topic, setTopic] = useState("Order & Styling Inquiry");
+  const [topic, setTopic] = useState("Styling & Collection Inquiry");
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState<{
@@ -117,7 +117,7 @@ export function ContactFormClient() {
           rows={5}
           required
           className="tati-textarea"
-          placeholder="Tell us how we can assist with your Tati bag or order…"
+          placeholder="Tell us how we can assist with collection previews, charm styling, or press…"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />

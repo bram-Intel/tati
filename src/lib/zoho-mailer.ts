@@ -46,7 +46,23 @@ function escapeHtml(text: string): string {
     .replace(/"/g, "&quot;");
 }
 
+function getEmailAssetOrigin(): string {
+  const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (configured && /^https?:\/\//i.test(configured)) {
+    const normalized = configured.replace(/\/+$/, "");
+    if (normalized === "https://bytatistudio.com") {
+      return "https://www.bytatistudio.com";
+    }
+    return normalized;
+  }
+  return "https://www.bytatistudio.com";
+}
+
 function wrapTatiEmailTemplate(title: string, bodyHtml: string): string {
+  const origin = getEmailAssetOrigin();
+  const heroLogoUrl = `${origin}/images/tati-logo-ivory.png`;
+  const footerLogoUrl = `${origin}/images/tati-logo-rose.png`;
+
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -54,27 +70,41 @@ function wrapTatiEmailTemplate(title: string, bodyHtml: string): string {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${escapeHtml(title)}</title>
 </head>
-<body style="margin:0;padding:0;background:#F1E8DF;color:#432C2A;font-family:Georgia,'Times New Roman',serif;">
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#F1E8DF;padding:36px 16px;">
+<body style="margin:0;padding:0;background:#F1E8DF;color:#432C2A;font-family:Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#F1E8DF;padding:36px 14px;">
     <tr>
       <td align="center">
-        <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="max-width:600px;width:100%;background:#FFF9F1;border:1px solid #EAD9C9;border-radius:12px;overflow:hidden;">
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width:600px;width:100%;background:#FFF9F1;border:1px solid #EAD9C9;border-radius:14px;overflow:hidden;box-shadow:0 18px 42px -18px rgba(67,44,42,0.16);">
           <tr>
-            <td style="background:linear-gradient(115deg,#DB2850,#F57971 57%,#F27F49);padding:38px 32px;text-align:center;color:#FFF1DD;">
-              <div style="font-size:11px;letter-spacing:2.4px;text-transform:uppercase;font-family:Arial,sans-serif;opacity:0.9;">Tati · bytatistudio.com</div>
-              <div style="font-size:40px;font-style:italic;margin:10px 0 4px;line-height:1;">Tati<span style="color:#FFF1DD;">.</span></div>
-              <div style="font-size:11px;letter-spacing:1.8px;text-transform:uppercase;font-family:Arial,sans-serif;opacity:0.92;">Colourful. Confident. Expressive.</div>
+            <td align="center" bgcolor="#DB2850" style="background-color:#DB2850;background-image:linear-gradient(115deg,#DB2850 0%,#F57971 57%,#F27F49 100%);padding:38px 30px 34px;text-align:center;color:#FFF1DD;">
+              <div style="font-family:Arial,'Helvetica Neue',sans-serif;font-size:10px;font-weight:600;letter-spacing:2.6px;text-transform:uppercase;color:#FFF1DD;opacity:0.9;">BYTATISTUDIO.COM &middot; COLLECTION 001</div>
+              <a href="${origin}" target="_blank" style="text-decoration:none;display:inline-block;margin:14px auto 12px;">
+                <img src="${heroLogoUrl}" width="176" height="91" alt="Tati" style="display:block;margin:0 auto;border:0;outline:none;text-decoration:none;max-width:100%;height:auto;font-family:Georgia,serif;font-style:italic;font-size:40px;line-height:1;color:#FFF1DD;" />
+              </a>
+              <div style="font-family:Arial,'Helvetica Neue',sans-serif;font-size:10px;letter-spacing:2.2px;text-transform:uppercase;color:#FFF1DD;opacity:0.92;">Colourful &middot; Confident &middot; Expressive</div>
             </td>
           </tr>
           <tr>
-            <td style="padding:36px 34px;font-family:Arial,sans-serif;font-size:14px;line-height:1.75;color:#432C2A;">
+            <td style="height:3px;background:#D9A078;font-size:0;line-height:0;">&nbsp;</td>
+          </tr>
+          <tr>
+            <td style="padding:38px 34px 34px;font-family:Arial,'Helvetica Neue',sans-serif;font-size:14.5px;line-height:1.8;color:#5A423D;">
               ${bodyHtml}
             </td>
           </tr>
           <tr>
-            <td style="background:#392B2B;color:#FFF1DD;padding:24px 32px;text-align:center;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1.2px;">
-              <div style="font-family:Georgia,serif;font-style:italic;font-size:20px;color:#F57971;margin-bottom:6px;">With love, Tati ♡</div>
-              <div style="color:#C8AAA0;text-transform:uppercase;">© 2026 Tati Studio · bytatistudio.com</div>
+            <td align="center" bgcolor="#392B2B" style="background-color:#392B2B;color:#FFF1DD;padding:30px 28px 26px;text-align:center;font-family:Arial,'Helvetica Neue',sans-serif;">
+              <a href="${origin}" target="_blank" style="text-decoration:none;display:inline-block;margin-bottom:10px;">
+                <img src="${footerLogoUrl}" width="102" height="53" alt="Tati" style="display:block;margin:0 auto;border:0;outline:none;text-decoration:none;height:auto;font-family:Georgia,serif;font-style:italic;font-size:24px;color:#F2A0A4;" />
+              </a>
+              <div style="font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:20px;color:#F57971;margin:4px 0 16px;">With love, Tati &hearts;</div>
+              <div style="margin:0 0 14px;font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;line-height:2.1;">
+                <a href="${origin}/shop" style="display:inline-block;color:#EBD8CE;text-decoration:none;margin:0 11px;">The Collection</a>
+                <a href="${origin}/charms" style="display:inline-block;color:#EBD8CE;text-decoration:none;margin:0 11px;">Bag Charms</a>
+                <a href="${origin}/story" style="display:inline-block;color:#EBD8CE;text-decoration:none;margin:0 11px;">Our Story</a>
+                <a href="${origin}/contact" style="display:inline-block;color:#EBD8CE;text-decoration:none;margin:0 11px;">Contact</a>
+              </div>
+              <div style="font-size:10.5px;letter-spacing:1.2px;color:#C8AAA0;text-transform:uppercase;">&copy; 2026 Tati Studio &middot; bytatistudio.com</div>
             </td>
           </tr>
         </table>
@@ -170,15 +200,26 @@ export async function sendNewsletterWelcomeEmail(email: string): Promise<MailDis
     const fromName = process.env.ZOHO_FROM_NAME?.trim() || "Tati Studio";
     const fromEmail = process.env.ZOHO_FROM_EMAIL?.trim() || process.env.ZOHO_SMTP_USER!.trim();
     const studioInbox = process.env.ZOHO_STUDIO_INBOX?.trim();
+    const origin = getEmailAssetOrigin();
 
     const html = wrapTatiEmailTemplate(
       "Welcome to the world of Tati",
       `
-      <p style="font-family:Georgia,serif;font-size:24px;margin:0 0 14px;color:#432C2A;">A little note from us.</p>
-      <p>Thank you for joining the Tati inner circle. You’ll be the first to know about new handbag silhouettes, limited-edition bag charm drops, and private atelier releases.</p>
-      <p style="color:#8D7770;">Remember: every Tati handbag includes a complimentary charm of your choice—because the details are the personality.</p>
-      <div style="margin:26px 0;">
-        <a href="${BRAND.url}/shop" style="display:inline-block;background:linear-gradient(115deg,#DB2850,#F27F49);color:#FFF1DD;text-decoration:none;padding:13px 26px;border-radius:30px;font-size:11px;letter-spacing:1.6px;text-transform:uppercase;">Explore the collection ↗</a>
+      <div style="font-size:10.5px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#B56C59;margin:0 0 8px;">A little note from us</div>
+      <h1 style="font-family:Georgia,'Times New Roman',serif;font-weight:500;font-size:28px;line-height:1.18;margin:0 0 16px;color:#432C2A;">Welcome to the world of <em>Tati.</em></h1>
+      <p style="margin:0 0 14px;">Thank you for joining the Tati launch list. Style should feel like you &mdash; and we can&rsquo;t wait to share a closer look at our debut handbags and personal details.</p>
+      <p style="margin:0 0 22px;color:#806E66;">As a reminder, every Tati bag is designed to arrive with a complimentary signature charm of your choice, with playful additional charms to combine your way.</p>
+      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#F3E8DC;border:1px solid #EAD9C9;border-radius:10px;margin:0 0 26px;">
+        <tr>
+          <td style="padding:18px 20px;">
+            <div style="font-size:10px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:#B56C59;margin-bottom:6px;">Collection 001 &middot; Coming Soon</div>
+            <div style="font-size:13.5px;line-height:1.65;color:#432C2A;">You&rsquo;ll be the very first to hear when our debut silhouettes and charm studio open for ordering.</div>
+          </td>
+        </tr>
+      </table>
+      <div style="font-size:0;line-height:0;">
+        <a href="${origin}/shop" target="_blank" style="display:inline-block;margin:0 10px 10px 0;padding:13px 26px;border-radius:999px;background-color:#DB2850;background-image:linear-gradient(115deg,#DB2850,#F27F49);font-family:Arial,'Helvetica Neue',sans-serif;font-size:11px;font-weight:600;line-height:1.2;letter-spacing:1.5px;text-transform:uppercase;color:#FFF1DD;text-decoration:none;white-space:nowrap;">Explore the Collection &#8599;</a>
+        <a href="${origin}/charms" target="_blank" style="display:inline-block;margin:0 0 10px 0;padding:12px 22px;border-radius:999px;border:1px solid #C8A695;background-color:#FFF9F1;font-family:Arial,'Helvetica Neue',sans-serif;font-size:11px;font-weight:500;line-height:1.2;letter-spacing:1.3px;text-transform:uppercase;color:#432C2A;text-decoration:none;white-space:nowrap;">Preview Bag Charms</a>
       </div>
       `
     );
@@ -186,7 +227,9 @@ export async function sendNewsletterWelcomeEmail(email: string): Promise<MailDis
     await transporter.sendMail({
       from: `"${fromName}" <${fromEmail}>`,
       to: email,
-      subject: "Welcome to Tati ♡ — First look & collection notes",
+      replyTo: BRAND.email,
+      subject: "Welcome to Tati ♡ — First look & launch notes",
+      text: `A little note from us.\n\nThank you for joining the Tati launch list at bytatistudio.com. You'll be the first to know when Collection 001 opens and new bag charms drop.\n\nExplore the Collection: ${origin}/shop\nPreview Bag Charms: ${origin}/charms\n\nWith love, Tati ♡`,
       html,
     });
 
@@ -296,31 +339,73 @@ export async function sendContactEmails(payload: {
     const transporter = createZohoTransporter();
     const fromName = process.env.ZOHO_FROM_NAME?.trim() || "Tati Studio";
     const fromEmail = process.env.ZOHO_FROM_EMAIL?.trim() || process.env.ZOHO_SMTP_USER!.trim();
-    const studioInbox = process.env.ZOHO_STUDIO_INBOX?.trim() || fromEmail;
+    const configuredInbox = process.env.ZOHO_STUDIO_INBOX?.trim();
+    const studioRecipients =
+      configuredInbox && configuredInbox.toLowerCase() !== BRAND.email.toLowerCase()
+        ? [BRAND.email, configuredInbox]
+        : [BRAND.email];
+    const origin = getEmailAssetOrigin();
 
-    await transporter.sendMail({
-      from: `"${fromName}" <${fromEmail}>`,
-      replyTo: payload.email,
-      to: studioInbox,
-      subject: `[Tati Studio Inquiry · ${payload.topic}] from ${payload.name}`,
-      text: `Name: ${payload.name}\nEmail: ${payload.email}\nTopic: ${payload.topic}\n\n${payload.message}`,
-    });
-
-    const replyHtml = wrapTatiEmailTemplate(
-      "We received your note",
+    const studioHtml = wrapTatiEmailTemplate(
+      `Studio Concierge Inquiry — ${payload.topic}`,
       `
-      <p style="font-family:Georgia,serif;font-size:24px;margin:0 0 12px;">Thank you for writing to us, ${escapeHtml(payload.name)}.</p>
-      <p>Our studio concierge has received your message regarding <strong>${escapeHtml(payload.topic)}</strong> and will respond within one business day.</p>
-      <p style="padding:14px;background:#F3E8DC;border-radius:8px;font-size:13px;color:#806E66;">“${escapeHtml(payload.message)}”</p>
+      <div style="font-size:10.5px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#B56C59;margin:0 0 8px;">Studio Concierge Desk</div>
+      <h1 style="font-family:Georgia,'Times New Roman',serif;font-weight:500;font-size:26px;line-height:1.2;margin:0 0 18px;color:#432C2A;">New note from <em>${escapeHtml(payload.name)}</em></h1>
+      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#F3E8DC;border:1px solid #EAD9C9;border-radius:10px;margin:0 0 22px;">
+        <tr>
+          <td style="padding:18px 20px;font-size:13.5px;line-height:1.7;color:#432C2A;">
+            <div><strong style="color:#B56C59;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;">From:</strong> ${escapeHtml(payload.name)} &lt;<a href="mailto:${escapeHtml(payload.email)}" style="color:#DB2850;text-decoration:none;">${escapeHtml(payload.email)}</a>&gt;</div>
+            <div style="margin-top:6px;"><strong style="color:#B56C59;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;">Topic:</strong> ${escapeHtml(payload.topic)}</div>
+          </td>
+        </tr>
+      </table>
+      <div style="padding:18px 20px;background:#FFFFFF;border-left:3px solid #DB2850;border-radius:8px;font-size:14.5px;line-height:1.75;color:#432C2A;margin-bottom:20px;">
+        ${escapeHtml(payload.message).replace(/\n/g, "<br/>")}
+      </div>
+      <p style="margin:0;font-size:12.5px;color:#806E66;">Hit <strong>Reply</strong> in Zoho Mail to write directly back to ${escapeHtml(payload.name)} (${escapeHtml(payload.email)}).</p>
       `
     );
 
     await transporter.sendMail({
       from: `"${fromName}" <${fromEmail}>`,
-      to: payload.email,
-      subject: "Thank you for contacting Tati ♡",
-      html: replyHtml,
+      replyTo: payload.email,
+      to: studioRecipients,
+      subject: `[Tati Studio · ${payload.topic}] from ${payload.name}`,
+      text: `New note from ${payload.name} (${payload.email})\nTopic: ${payload.topic}\n\n${payload.message}`,
+      html: studioHtml,
     });
+
+    const replyHtml = wrapTatiEmailTemplate(
+      "We received your note",
+      `
+      <div style="font-size:10.5px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#B56C59;margin:0 0 8px;">Studio Concierge</div>
+      <h1 style="font-family:Georgia,'Times New Roman',serif;font-weight:500;font-size:27px;line-height:1.18;margin:0 0 14px;color:#432C2A;">Thank you for writing to us, <em>${escapeHtml(payload.name)}.</em></h1>
+      <p style="margin:0 0 16px;">Our studio team has received your note regarding <strong>${escapeHtml(payload.topic)}</strong> at <a href="mailto:${BRAND.email}" style="color:#DB2850;text-decoration:none;">${BRAND.email}</a> and will respond within one business day.</p>
+      <div style="padding:16px 18px;background:#F3E8DC;border:1px solid #EAD9C9;border-radius:10px;font-size:13.5px;line-height:1.7;color:#5A423D;margin-bottom:24px;">
+        &ldquo;${escapeHtml(payload.message).replace(/\n/g, "<br/>")}&rdquo;
+      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+        <tr>
+          <td style="border-radius:999px;background-color:#DB2850;background-image:linear-gradient(115deg,#DB2850,#F27F49);">
+            <a href="${origin}/shop" target="_blank" style="display:inline-block;padding:13px 26px;font-family:Arial,'Helvetica Neue',sans-serif;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#FFF1DD;text-decoration:none;">Explore the Collection &#8599;</a>
+          </td>
+        </tr>
+      </table>
+      `
+    );
+
+    try {
+      await transporter.sendMail({
+        from: `"${fromName}" <${fromEmail}>`,
+        to: payload.email,
+        replyTo: BRAND.email,
+        subject: "Thank you for contacting Tati ♡",
+        text: `Thank you for writing to Tati Studio, ${payload.name}.\n\nWe received your note regarding ${payload.topic} at ${BRAND.email} and will reply within one business day.\n\n"${payload.message}"\n\nWith love, Tati ♡`,
+        html: replyHtml,
+      });
+    } catch (replyErr) {
+      console.warn("[Tati/Zoho] Studio inquiry delivered to hello@bytatistudio.com, visitor auto-reply failed:", replyErr);
+    }
 
     return { dispatched: true, channel: "zoho-smtp" };
   } catch (err) {

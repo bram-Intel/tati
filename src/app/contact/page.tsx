@@ -1,6 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
-import { Mail, MapPin, Sparkles } from "lucide-react";
+import { Feather, Mail, MapPin } from "lucide-react";
 import { BRAND } from "@/config/brand";
 import { ContactFormClient } from "@/components/sections/ContactFormClient";
 
@@ -31,7 +31,14 @@ export default function ContactPage() {
               Let’s talk colour, hardware &amp; personal details.
             </h2>
             <p className="tati-lead">
-              Notes sent through our studio desk are routed via Zoho Mail directly to our team and archived securely so we can respond within one business day.
+              Notes sent through our studio desk are routed via Zoho Mail directly to{" "}
+              <a
+                href={`mailto:${BRAND.email}`}
+                style={{ color: "var(--raspberry)", textDecoration: "underline", textUnderlineOffset: 3 }}
+              >
+                {BRAND.email}
+              </a>{" "}
+              and archived securely so we can respond within one business day.
             </p>
 
             <div
@@ -48,12 +55,14 @@ export default function ContactPage() {
                   <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--muted)" }}>
                     Direct Mail
                   </div>
-                  <div style={{ fontWeight: 500 }}>{BRAND.email}</div>
+                  <a href={`mailto:${BRAND.email}`} style={{ fontWeight: 500 }}>
+                    {BRAND.email}
+                  </a>
                 </div>
               </div>
 
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <Sparkles size={18} color="#DB2850" />
+                <Feather size={18} color="#DB2850" />
                 <div>
                   <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--muted)" }}>
                     Press &amp; Collaborations

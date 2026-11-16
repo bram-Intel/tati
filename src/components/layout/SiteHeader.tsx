@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Sparkles, X } from "lucide-react";
+import { Menu, Bell, X } from "lucide-react";
 import { BRAND } from "@/config/brand";
 import { TatiLogo } from "@/components/brand/TatiLogo";
 
@@ -69,7 +69,7 @@ export function SiteHeader() {
               className="tati-cart-trigger"
               aria-label="Coming soon — join the Tati launch waitlist"
             >
-              <Sparkles size={13} strokeWidth={1.8} />
+              <Bell size={13} strokeWidth={1.85} aria-hidden="true" />
               <span className="tati-waitlist-label-full">Coming Soon</span>
               <span className="tati-waitlist-label-short">Waitlist</span>
             </Link>
