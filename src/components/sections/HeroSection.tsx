@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { BRAND } from "@/config/brand";
-import { TatiButterfly } from "@/components/brand/TatiLogo";
+import { TatiLogo } from "@/components/brand/TatiLogo";
 import { HeroAtelierCanvas } from "@/components/cinematic/HeroAtelierCanvas";
 
 export function HeroSection() {
@@ -29,8 +29,7 @@ export function HeroSection() {
           </div>
 
           <div className="tati-hero-mark" aria-hidden="true">
-            <span>Tati ♡</span>
-            <TatiButterfly size={26} variant="ivory" />
+            <TatiLogo variant="light" size="md" />
           </div>
         </div>
 

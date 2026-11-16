@@ -9,7 +9,7 @@ export function SiteFooter() {
       <div className="tati-container">
         <div>
           <Link href="/" aria-label="Tati Studio Home">
-            <TatiLogo variant="footer" size="md" showDot />
+            <TatiLogo variant="footer" size="md" />
           </Link>
         </div>
 

@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { BRAND } from "@/config/brand";
+import { TatiLogo } from "@/components/brand/TatiLogo";
 import { ButterflyCrest3D } from "@/components/cinematic/ButterflyCrest3D";
 
 export function StorySection() {
@@ -15,22 +16,12 @@ export function StorySection() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            gap: 10,
+            gap: 14,
             width: "100%",
           }}
         >
           <ButterflyCrest3D />
-          <div
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontStyle: "italic",
-              fontSize: 48,
-              color: "var(--ivory)",
-              lineHeight: 1,
-            }}
-          >
-            Tati.
-          </div>
+          <TatiLogo variant="light" size="lg" />
           <div className="tati-eyebrow tati-eyebrow--light">
             {BRAND.tagline}
           </div>

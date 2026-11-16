@@ -39,24 +39,39 @@ export function getClientDb(): Firestore | null {
   return clientDb;
 }
 
+let analyticsInitPromise: Promise<Analytics | null> | null = null;
+
 export async function initFirebaseAnalytics(): Promise<Analytics | null> {
   if (typeof window === "undefined" || !firebaseConfig.measurementId) {
     return null;
   }
   if (clientAnalytics) return clientAnalytics;
+  if (typeof navigator !== "undefined" && navigator.onLine === false) {
+    return null;
+  }
 
   const app = getFirebaseApp();
   if (!app) return null;
 
-  try {
-    const analyticsMod = await import("firebase/analytics");
-    const supported = await analyticsMod.isSupported();
-    if (!supported) return null;
-    clientAnalytics = analyticsMod.getAnalytics(app);
-    return clientAnalytics;
-  } catch {
-    return null;
+  if (!analyticsInitPromise) {
+    analyticsInitPromise = (async () => {
+      try {
+        const analyticsMod = await import("firebase/analytics");
+        const supported = await analyticsMod.isSupported();
+        if (!supported) return null;
+
+        const { getInstallations, getId } = await import("firebase/installations");
+        await getId(getInstallations(app));
+
+        clientAnalytics = analyticsMod.getAnalytics(app);
+        return clientAnalytics;
+      } catch {
+        return null;
+      }
+    })();
   }
+
+  return analyticsInitPromise;
 }
 
 export async function trackTatiAnalyticsEvent(

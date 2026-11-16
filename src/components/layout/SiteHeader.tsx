@@ -39,8 +39,8 @@ export function SiteHeader() {
             >
               <Menu size={18} />
             </button>
-            <Link href="/" aria-label="Tati Home">
-              <TatiLogo variant="dark" size="md" />
+            <Link href="/" aria-label="Tati Home" style={{ display: "inline-flex", alignItems: "center" }}>
+              <TatiLogo variant="dark" size="md" className="tati-header-logo" />
             </Link>
           </div>
 

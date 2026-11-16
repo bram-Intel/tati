@@ -7,6 +7,7 @@ import {
   buildButterflyEmblem,
   createChampagneGoldMaterial,
 } from "@/lib/three-handbag-builder";
+import { TatiLogo } from "@/components/brand/TatiLogo";
 
 export function ButterflyCrest3D() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -163,16 +164,9 @@ export function ButterflyCrest3D() {
 
   if (!webglReady) {
     return (
-      <strong
-        style={{
-          fontFamily: "var(--font-serif)",
-          fontStyle: "italic",
-          fontSize: 64,
-          color: "var(--ivory)",
-        }}
-      >
-        Tati.
-      </strong>
+      <div style={{ padding: "24px 0" }}>
+        <TatiLogo variant="light" size="xl" />
+      </div>
     );
   }
 
