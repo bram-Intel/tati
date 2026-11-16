@@ -30,17 +30,17 @@ export const BRAND = {
   },
   collection: {
     eyebrow: "A good bag changes everything",
-    heading: "The collection.",
+    heading: "The collection",
     supporting: "A first look at the world of Tati.",
   },
   charms: {
     eyebrow: "The finishing touch",
     heading: "Add a little charm.",
-    supporting: "Because the details are the personality.",
+    supporting: "Small details. A little more you.",
+    makeItYoursEyebrow: "Make it yours",
+    detailsHeading: "Because the details are the personality.",
     description:
-      "Every Tati bag comes with a complimentary charm, adding a personal finishing touch to your new favourite accessory.",
-    additionalText:
-      "Want a little more? Discover additional charms and create your own combination.",
+      "Give your bag its own signature. Think playful charms, sweet little symbols and personal touches that let you style your Tati your way.",
     note: "Bag charms · Personal touches · Your own combination",
   },
   story: {
@@ -48,12 +48,9 @@ export const BRAND = {
     headingLead: "Style should feel",
     headingItalic: "like you.",
     paragraphs: [
-      "We believe a handbag should be more than just something you carry.",
-      "Tati brings a fresh perspective to handbags through distinctive designs, thoughtful details and a little room for personal expression.",
-      "Inspired by individuality and the little things that make personal style unique, our pieces are designed to add something special to the way you dress and express yourself.",
-      "Whether it’s the finishing touch of a charm, an unexpected detail or simply a piece that feels like you, we believe style should never feel ordinary.",
+      "Tati is a celebration of personal style, colour and the little details that make an outfit yours. We believe your everyday essentials can be anything but ordinary.",
     ],
-    closingSignOff: "Tati. Colourful. Confident. Expressive.",
+    closingSignOff: "With love, Tati ♡",
   },
   newsletter: {
     eyebrow: "A little note from us",

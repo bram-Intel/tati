@@ -1,6 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
+import { CustomSelect } from "@/components/ui/CustomSelect";
+
+const CONTACT_TOPICS = [
+  { value: "Order & Styling Inquiry", label: "Styling & Collection Inquiry" },
+  { value: "Bespoke Charm Combination", label: "Bespoke Charm Combination" },
+  { value: "Press & Stockists", label: "Press & Stockists" },
+  { value: "Shipping & Returns", label: "Launch & Availability" },
+];
 
 export function ContactFormClient() {
   const [name, setName] = useState("");
@@ -93,17 +101,13 @@ export function ContactFormClient() {
 
       <div className="tati-field">
         <label htmlFor="contact-topic">Topic</label>
-        <select
+        <CustomSelect
           id="contact-topic"
-          className="tati-select"
+          label="Inquiry Topic"
           value={topic}
-          onChange={(e) => setTopic(e.target.value)}
-        >
-          <option value="Order & Styling Inquiry">Order &amp; Styling Inquiry</option>
-          <option value="Bespoke Charm Combination">Bespoke Charm Combination</option>
-          <option value="Press & Stockists">Press &amp; Stockists</option>
-          <option value="Shipping & Returns">Shipping &amp; Returns</option>
-        </select>
+          options={CONTACT_TOPICS}
+          onChange={setTopic}
+        />
       </div>
 
       <div className="tati-field">

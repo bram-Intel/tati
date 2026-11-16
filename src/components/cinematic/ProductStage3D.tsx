@@ -22,6 +22,7 @@ interface ProductStage3DProps {
   extraCharmIds?: string[];
   cameraView?: StageCameraView;
   compact?: boolean;
+  showHint?: boolean;
 }
 
 export function ProductStage3D({
@@ -32,6 +33,7 @@ export function ProductStage3D({
   extraCharmIds = [],
   cameraView = "three-quarter",
   compact = false,
+  showHint = true,
 }: ProductStage3DProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -315,25 +317,27 @@ export function ProductStage3D({
         ref={canvasRef}
         style={{ width: "100%", height: "100%", display: "block" }}
       />
-      <span
-        style={{
-          position: "absolute",
-          left: 12,
-          bottom: 12,
-          padding: "5px 10px",
-          borderRadius: 999,
-          background: "rgba(255, 249, 241, 0.86)",
-          border: "1px solid var(--hairline)",
-          fontSize: 9.5,
-          fontWeight: 600,
-          letterSpacing: "0.1em",
-          textTransform: "uppercase",
-          color: "var(--ink)",
-          pointerEvents: "none",
-        }}
-      >
-        Drag to rotate 360°
-      </span>
+      {showHint && (
+        <span
+          style={{
+            position: "absolute",
+            left: 12,
+            bottom: 12,
+            padding: "5px 10px",
+            borderRadius: 999,
+            background: "rgba(255, 249, 241, 0.86)",
+            border: "1px solid var(--hairline)",
+            fontSize: 9.5,
+            fontWeight: 600,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: "var(--ink)",
+            pointerEvents: "none",
+          }}
+        >
+          Drag to rotate 360°
+        </span>
+      )}
     </div>
   );
 }

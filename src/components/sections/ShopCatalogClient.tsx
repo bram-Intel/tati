@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import Image from "next/image";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { BAGS, CHARMS, formatPrice } from "@/config/catalog";
+import { BAGS, CHARMS } from "@/config/catalog";
 import { BagProductCard } from "@/components/sections/BagProductCard";
-import { useStore } from "@/components/layout/StoreContext";
+import { CharmMedallionShowcase } from "@/components/ui/CharmMedallionShowcase";
 
 type FilterKind = "all" | "bags" | "charms";
 
@@ -16,34 +16,22 @@ export function ShopCatalogClient() {
     initialParam === "charms" ? "charms" : initialParam === "bags" ? "bags" : "all";
 
   const [filter, setFilter] = useState<FilterKind>(initialFilter);
-  const { addCharmToCart, currency } = useStore();
 
   const subtitle = useMemo(() => {
-    if (filter === "bags") return "Every Tati silhouette arrives with one complimentary bag charm.";
-    if (filter === "charms") return "Champagne-gold & enamel charms to mix, layer, and swap.";
-    return "Distinctive handbags and personal charms designed for expressive everyday style.";
+    if (filter === "bags") return "Every Tati silhouette arrives with a complimentary charm at launch.";
+    if (filter === "charms") return "Playful charms, sweet little symbols and personal touches.";
+    return "A first look at Tati silhouettes and personal bag charms — arriving soon.";
   }, [filter]);
 
   return (
     <div className="tati-section">
       <div className="tati-container">
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: 16,
-            paddingBottom: 26,
-            marginBottom: 38,
-            borderBottom: "1px solid var(--hairline)",
-          }}
-        >
-          <p className="tati-lead" style={{ maxWidth: 520 }}>
+        <div className="tati-shop-toolbar">
+          <p className="tati-lead" style={{ maxWidth: 480 }}>
             {subtitle}
           </p>
 
-          <div style={{ display: "flex", gap: 8 }} role="group" aria-label="Filter collection">
+          <div className="tati-filter-tabs" role="group" aria-label="Filter collection">
             {(
               [
                 { id: "all", label: "All Pieces (9)" },
@@ -55,8 +43,8 @@ export function ShopCatalogClient() {
                 key={tab.id}
                 type="button"
                 onClick={() => setFilter(tab.id)}
-                className={filter === tab.id ? "tati-btn-primary" : "tati-btn-outline"}
-                style={{ padding: "10px 18px" }}
+                className="tati-filter-tab"
+                data-active={filter === tab.id ? "true" : "false"}
               >
                 {tab.label}
               </button>
@@ -65,8 +53,8 @@ export function ShopCatalogClient() {
         </div>
 
         {(filter === "all" || filter === "bags") && (
-          <div style={{ marginBottom: filter === "all" ? 68 : 0 }}>
-            <div className="tati-eyebrow" style={{ marginBottom: 18 }}>
+          <div style={{ marginBottom: filter === "all" ? 72 : 0 }}>
+            <div className="tati-eyebrow" style={{ marginBottom: 20 }}>
               Handbags · Complimentary charm included
             </div>
             <div className="tati-collection-grid tati-collection-grid--four">
@@ -79,54 +67,32 @@ export function ShopCatalogClient() {
 
         {(filter === "all" || filter === "charms") && (
           <div>
-            <div className="tati-eyebrow" style={{ marginBottom: 18 }}>
-              Bag Charms · Champagne gold &amp; enamel
+            <div className="tati-eyebrow" style={{ marginBottom: 20 }}>
+              Bag Charms · Personal touches
             </div>
-            <div className="tati-collection-grid">
+            <div className="tati-charms-catalog-grid">
               {CHARMS.map((charm) => (
                 <article key={charm.id} className="tati-product-card">
-                  <div className="tati-product-frame">
+                  <div className="tati-product-frame tati-product-frame--medallion">
                     <div className="tati-card-pill-bar">
-                      <span className="tati-badge">{charm.glyph} Atelier Charm</span>
+                      <span className="tati-badge">Champagne Gold &amp; Enamel</span>
                     </div>
-                    <Image
-                      src={charm.image}
-                      alt={charm.name}
-                      fill
-                      sizes="(max-width: 780px) 100vw, 33vw"
-                      className="tati-product-img"
-                    />
-                    <div className="tati-quick-bar">
-                      <button
-                        type="button"
-                        className="tati-quick-btn"
-                        onClick={() => addCharmToCart(charm.id)}
-                      >
-                        Add Charm · {formatPrice(charm.priceGbp, currency)}
-                      </button>
-                    </div>
+                    <CharmMedallionShowcase charm={charm} />
                   </div>
 
                   <div className="tati-card-meta">
                     <div className="tati-card-row">
-                      <h3 className="tati-card-title" style={{ fontSize: 23 }}>
-                        {charm.name}
-                      </h3>
-                      <span className="tati-card-price">
-                        {formatPrice(charm.priceGbp, currency)}
-                      </span>
+                      <h3 className="tati-card-title">{charm.name}</h3>
                     </div>
                     <p className="tati-card-tagline">{charm.finish}</p>
-                    <p
-                      style={{
-                        fontSize: 12.5,
-                        color: "var(--muted-warm)",
-                        marginTop: 8,
-                        lineHeight: 1.65,
-                      }}
-                    >
-                      {charm.description}
-                    </p>
+                    <p className="tati-card-desc">{charm.description}</p>
+
+                    <div className="tati-swatch-row">
+                      <span className="tati-coming-soon">Coming soon</span>
+                      <Link href="/charms" className="tati-explore-link">
+                        Style in 3D ↗
+                      </Link>
+                    </div>
                   </div>
                 </article>
               ))}

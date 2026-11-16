@@ -8,7 +8,7 @@ import { NewsletterSection } from "@/components/sections/NewsletterSection";
 export const metadata: Metadata = {
   title: "Bag Charms",
   description:
-    "Every Tati bag comes with a complimentary charm. Discover additional champagne-gold and enamel charms and create your own combination.",
+    "Give your bag its own signature. Think playful charms, sweet little symbols and personal touches that let you style your Tati your way.",
 };
 
 export default function CharmsPage() {
@@ -18,13 +18,13 @@ export default function CharmsPage() {
         <div className="tati-container">
           <div className="tati-eyebrow">{BRAND.charms.eyebrow}</div>
           <h1>{BRAND.charms.heading}</h1>
-          <p className="tati-lead" style={{ maxWidth: 580, marginInline: "auto" }}>
-            {BRAND.charms.description} {BRAND.charms.additionalText}
+          <p className="tati-lead" style={{ maxWidth: 520, marginInline: "auto" }}>
+            {BRAND.charms.supporting}
           </p>
         </div>
       </section>
 
-      <CharmsSection />
+      <CharmsSection hideHeader />
       <CharmsCatalogSection />
       <NewsletterSection />
     </>

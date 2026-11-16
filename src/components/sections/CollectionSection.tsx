@@ -29,7 +29,7 @@ export function CollectionSection() {
 
         <div style={{ textAlign: "center", marginTop: 42 }}>
           <Link href="/shop" className="tati-btn-outline">
-            View Full Atelier Collection (4 silhouettes) ↗
+            Explore Full Collection ↗
           </Link>
         </div>
       </div>

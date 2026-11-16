@@ -3,11 +3,9 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, ShoppingBag, X } from "lucide-react";
+import { Menu, Sparkles, X } from "lucide-react";
 import { BRAND } from "@/config/brand";
-import { CURRENCIES, type CurrencyCode } from "@/config/catalog";
 import { TatiLogo } from "@/components/brand/TatiLogo";
-import { useStore } from "@/components/layout/StoreContext";
 
 const NAV_ITEMS = [
   { href: "/shop", label: "Shop" },
@@ -18,7 +16,6 @@ const NAV_ITEMS = [
 
 export function SiteHeader() {
   const pathname = usePathname();
-  const { totalCount, currency, setCurrency, openCart } = useStore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -30,7 +27,7 @@ export function SiteHeader() {
 
       <header className="tati-header">
         <div className="tati-container tati-header-inner">
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <button
               type="button"
               className="tati-menu-btn"
@@ -39,7 +36,11 @@ export function SiteHeader() {
             >
               <Menu size={18} />
             </button>
-            <Link href="/" aria-label="Tati Home" style={{ display: "inline-flex", alignItems: "center" }}>
+            <Link
+              href="/"
+              aria-label="Tati Home"
+              style={{ display: "inline-flex", alignItems: "center" }}
+            >
               <TatiLogo variant="dark" size="md" className="tati-header-logo" />
             </Link>
           </div>
@@ -63,32 +64,15 @@ export function SiteHeader() {
           </nav>
 
           <div className="tati-header-actions">
-            <label htmlFor="tati-currency" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden" }}>
-              Currency
-            </label>
-            <select
-              id="tati-currency"
-              className="tati-currency-select"
-              value={currency}
-              onChange={(e) => setCurrency(e.target.value as CurrencyCode)}
-              aria-label="Select display currency"
-            >
-              {Object.values(CURRENCIES).map((c) => (
-                <option key={c.code} value={c.code}>
-                  {c.code} {c.symbol}
-                </option>
-              ))}
-            </select>
-
-            <button
-              type="button"
+            <Link
+              href="/#newsletter"
               className="tati-cart-trigger"
-              onClick={openCart}
-              aria-label={`Open shopping bag with ${totalCount} items`}
+              aria-label="Coming soon — join the Tati launch waitlist"
             >
-              <ShoppingBag size={14} strokeWidth={1.8} />
-              <span>YOUR BAG · {totalCount}</span>
-            </button>
+              <Sparkles size={13} strokeWidth={1.8} />
+              <span className="tati-waitlist-label-full">Coming Soon</span>
+              <span className="tati-waitlist-label-short">Waitlist</span>
+            </Link>
           </div>
         </div>
       </header>
@@ -161,8 +145,16 @@ export function SiteHeader() {
                 color: "var(--muted)",
               }}
             >
-              <p style={{ fontStyle: "italic", fontFamily: "var(--font-serif)", fontSize: 18, color: "var(--raspberry)", marginBottom: 4 }}>
-                {BRAND.signOff}
+              <p
+                style={{
+                  fontStyle: "italic",
+                  fontFamily: "var(--font-serif)",
+                  fontSize: 18,
+                  color: "var(--raspberry)",
+                  marginBottom: 4,
+                }}
+              >
+                {BRAND.story.closingSignOff}
               </p>
               <p>{BRAND.domain}</p>
             </div>

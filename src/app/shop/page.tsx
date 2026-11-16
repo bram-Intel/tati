@@ -1,12 +1,13 @@
 import React, { Suspense } from "react";
 import type { Metadata } from "next";
+import { BRAND } from "@/config/brand";
 import { ShopCatalogClient } from "@/components/sections/ShopCatalogClient";
 import { NewsletterSection } from "@/components/sections/NewsletterSection";
 
 export const metadata: Metadata = {
-  title: "Shop The Collection",
+  title: "The Collection",
   description:
-    "Explore Tati handbags and personal champagne-gold bag charms. Every handbag includes a complimentary charm of your choice.",
+    "A first look at the world of Tati — sculpted everyday handbags and personal champagne-gold bag charms. Coming soon.",
 };
 
 export default function ShopPage() {
@@ -14,10 +15,10 @@ export default function ShopPage() {
     <>
       <section className="tati-page-banner">
         <div className="tati-container">
-          <div className="tati-eyebrow">A good bag changes everything</div>
-          <h1>The Collection</h1>
+          <div className="tati-eyebrow">{BRAND.collection.eyebrow}</div>
+          <h1>{BRAND.collection.heading}</h1>
           <p className="tati-lead" style={{ maxWidth: 520, marginInline: "auto" }}>
-            Everyday bags, made to make a statement—each finished with a complimentary charm and optional combinations.
+            {BRAND.collection.supporting}
           </p>
         </div>
       </section>

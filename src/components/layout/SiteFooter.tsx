@@ -20,7 +20,6 @@ export function SiteFooter() {
           <Link href="/charms">Bag Charms</Link>
           <Link href="/story">Our Story</Link>
           <Link href="/contact">Contact</Link>
-          <Link href="/checkout">Your Bag</Link>
         </nav>
 
         <div className="tati-footer-policies">

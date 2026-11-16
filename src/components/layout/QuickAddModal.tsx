@@ -3,9 +3,10 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Check, Sparkles, X } from "lucide-react";
-import { BAGS, CHARMS, formatPrice, type BagProduct } from "@/config/catalog";
+import { BAGS, CHARMS, type BagProduct } from "@/config/catalog";
 import { ProductStage3D, type StageCameraView } from "@/components/cinematic/ProductStage3D";
 import { useStore } from "@/components/layout/StoreContext";
+import { CharmEmblemIcon } from "@/components/ui/CharmEmblemIcon";
 
 function QuickAddModalBody({
   bag,
@@ -14,7 +15,6 @@ function QuickAddModalBody({
   bag: BagProduct;
   onClose: () => void;
 }) {
-  const { addBagToCart, currency } = useStore();
   const [colorwayId, setColorwayId] = useState(bag.defaultColorwayId);
   const [complimentaryCharmId, setComplimentaryCharmId] = useState(bag.defaultCharmId);
   const [extraCharmIds, setExtraCharmIds] = useState<string[]>([]);
@@ -22,11 +22,6 @@ function QuickAddModalBody({
 
   const activeColorway =
     bag.colorways.find((c) => c.id === colorwayId) || bag.colorways[0];
-
-  const extrasTotal = extraCharmIds.reduce((sum, id) => {
-    const c = CHARMS.find((ch) => ch.id === id);
-    return sum + (c ? c.priceGbp : 0);
-  }, 0);
 
   const toggleExtraCharm = (id: string) => {
     setExtraCharmIds((prev) =>
@@ -53,18 +48,18 @@ function QuickAddModalBody({
             borderRight: "1px solid var(--hairline)",
           }}
         >
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span className="tati-badge">Live 3D Atelier</span>
-            <div style={{ display: "flex", gap: 6 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+            <span className="tati-badge">3D Styling Preview</span>
+            <div className="tati-segmented">
               {(["front", "three-quarter", "charm"] as StageCameraView[]).map((view) => (
                 <button
                   key={view}
                   type="button"
                   onClick={() => setCameraView(view)}
-                  className="tati-3d-toggle"
+                  className="tati-seg-btn"
                   data-active={cameraView === view ? "true" : "false"}
                 >
-                  {view === "three-quarter" ? "3/4" : view === "charm" ? "Charm Zoom" : "Front"}
+                  {view === "three-quarter" ? "3/4 View" : view === "charm" ? "Charm" : "Front"}
                 </button>
               ))}
             </div>
@@ -83,7 +78,7 @@ function QuickAddModalBody({
           </div>
 
           <div style={{ fontSize: 11.5, color: "var(--muted-warm)", textAlign: "center" }}>
-            Leather: <strong>{activeColorway.name}</strong> · Click charms on the right to see them clip on in 3D
+            Leather: <strong>{activeColorway.name}</strong> · Click charms to preview in 3D
           </div>
         </div>
 
@@ -123,55 +118,36 @@ function QuickAddModalBody({
           <p style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 6 }}>{bag.tagline}</p>
 
           {/* Leather Colourway */}
-          <div style={{ marginTop: 20 }}>
-            <div className="tati-eyebrow" style={{ marginBottom: 10 }}>
-              1. Leather shade — {activeColorway.name}
+          <div className="tati-control-group">
+            <div className="tati-eyebrow tati-control-label">
+              <span>1. Leather shade — {activeColorway.name}</span>
             </div>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+            <div className="tati-shade-pill-row">
               {bag.colorways.map((c) => (
                 <button
                   key={c.id}
                   type="button"
                   onClick={() => setColorwayId(c.id)}
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 8,
-                    padding: "7px 13px",
-                    borderRadius: 999,
-                    border:
-                      c.id === activeColorway.id
-                        ? "1.5px solid var(--raspberry)"
-                        : "1px solid var(--hairline)",
-                    background: c.id === activeColorway.id ? "#FFF1EC" : "var(--paper)",
-                    fontSize: 12,
-                  }}
+                  className="tati-shade-pill"
+                  data-active={c.id === activeColorway.id ? "true" : "false"}
                 >
                   <span
-                    style={{
-                      width: 14,
-                      height: 14,
-                      borderRadius: "50%",
-                      background: c.hex,
-                      border: "1px solid rgba(67,44,42,0.25)",
-                    }}
+                    className="tati-shade-pill-swatch"
+                    style={{ background: c.hex }}
                   />
-                  {c.name}
+                  <span>{c.name}</span>
                 </button>
               ))}
             </div>
           </div>
 
           {/* Complimentary Charm */}
-          <div style={{ marginTop: 20 }}>
-            <div
-              className="tati-eyebrow"
-              style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 10 }}
-            >
-              <Sparkles size={12} color="#DB2850" />
-              2. Complimentary charm (Included free)
+          <div className="tati-control-group">
+            <div className="tati-eyebrow tati-control-label">
+              <Sparkles size={12} color="var(--raspberry)" />
+              <span>2. Complimentary charm</span>
             </div>
-            <div className="tati-charm-selector-row">
+            <div className="tati-charm-selector-grid">
               {CHARMS.map((charm) => (
                 <button
                   key={charm.id}
@@ -183,7 +159,7 @@ function QuickAddModalBody({
                   className="tati-charm-chip"
                   data-selected={complimentaryCharmId === charm.id ? "true" : "false"}
                 >
-                  <span>{charm.glyph}</span>
+                  <CharmEmblemIcon symbol={charm.symbol} size={14} />
                   <span>{charm.shortName}</span>
                 </button>
               ))}
@@ -191,11 +167,11 @@ function QuickAddModalBody({
           </div>
 
           {/* Extra Charms */}
-          <div style={{ marginTop: 20 }}>
-            <div className="tati-eyebrow" style={{ marginBottom: 10 }}>
-              3. Layer additional charms (Optional · up to 3)
+          <div className="tati-control-group">
+            <div className="tati-eyebrow tati-control-label">
+              <span>3. Layer personal touches (up to 3)</span>
             </div>
-            <div className="tati-charm-selector-row">
+            <div className="tati-charm-selector-grid">
               {CHARMS.map((charm) => {
                 const selected = extraCharmIds.includes(charm.id);
                 return (
@@ -209,59 +185,30 @@ function QuickAddModalBody({
                     className="tati-charm-chip"
                     data-extra={selected ? "true" : "false"}
                   >
-                    {selected && <Check size={12} color="#DB2850" />}
-                    <span>
-                      {charm.glyph} {charm.shortName} (+{formatPrice(charm.priceGbp, currency)})
-                    </span>
+                    {selected ? (
+                      <Check size={13} color="var(--raspberry)" />
+                    ) : (
+                      <CharmEmblemIcon symbol={charm.symbol} size={14} />
+                    )}
+                    <span>{charm.shortName}</span>
                   </button>
                 );
               })}
             </div>
           </div>
 
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: 12,
-              marginTop: 26,
-              paddingTop: 18,
-              borderTop: "1px solid var(--hairline)",
-            }}
-          >
+          <div className="tati-workbench-footer">
             <div>
-              <div style={{ fontSize: 11, color: "var(--muted)", textTransform: "uppercase" }}>
-                Total
-              </div>
-              <div style={{ fontFamily: "var(--font-serif)", fontSize: 28, fontWeight: 500 }}>
-                {formatPrice(bag.priceGbp + extrasTotal, currency)}
-              </div>
+              <div className="tati-workbench-summary">Launch Preview</div>
+              <div className="tati-coming-soon-serif">Coming soon</div>
             </div>
 
-            <button
-              type="button"
-              className="tati-btn-primary"
-              onClick={() =>
-                addBagToCart({
-                  bagSlug: bag.slug,
-                  colorwayId: activeColorway.id,
-                  complimentaryCharmId,
-                  extraCharmIds,
-                })
-              }
-            >
-              Add to Bag
-            </button>
-          </div>
-
-          <div style={{ marginTop: 14, textAlign: "right" }}>
             <Link
               href={`/products/${bag.slug}`}
               onClick={onClose}
-              style={{ fontSize: 12, color: "var(--raspberry)", textDecoration: "underline" }}
+              className="tati-btn-primary"
             >
-              View full handbag specifications →
+              Explore Piece ↗
             </Link>
           </div>
         </div>
