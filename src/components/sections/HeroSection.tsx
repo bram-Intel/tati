@@ -9,7 +9,7 @@ export function HeroSection() {
     <section className="tati-hero tati-gradient-surface">
       <div className="tati-grain-overlay" aria-hidden="true" />
 
-      <div className="tati-container tati-hero-grid">
+      <div className="tati-container tati-hero-content">
         <div className="tati-hero-copy">
           <div className="tati-eyebrow tati-eyebrow--light">{BRAND.hero.eyebrow}</div>
           <h1>
@@ -32,11 +32,9 @@ export function HeroSection() {
             <TatiLogo variant="light" size="md" />
           </div>
         </div>
-
-        <div>
-          <HeroAtelierCanvas />
-        </div>
       </div>
+
+      <HeroAtelierCanvas />
     </section>
   );
 }

@@ -397,33 +397,37 @@ canvas {
 /* Hero Section */
 .tati-hero {
   position: relative;
-  min-height: clamp(600px, 84vh, 840px);
+  min-height: clamp(600px, 84vh, 800px);
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   overflow: hidden;
-  padding-block: clamp(56px, 8vw, 92px);
+  padding-block: clamp(64px, 8vw, 104px);
 }
 
-.tati-hero-grid {
+.tati-hero-content {
   position: relative;
   z-index: 3;
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: clamp(28px, 4vw, 60px);
-  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 
 .tati-hero-copy {
-  max-width: 580px;
+  max-width: 540px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .tati-hero h1 {
   font-family: var(--font-serif);
   font-weight: 500;
-  font-size: clamp(46px, 6.8vw, 80px);
+  font-size: clamp(46px, 6.6vw, 78px);
   line-height: 1.02;
   color: var(--ivory);
-  margin: 18px 0 22px;
+  margin: 18px 0 20px;
   letter-spacing: -0.02em;
 }
 
@@ -433,53 +437,34 @@ canvas {
 }
 
 .tati-hero-sub {
-  max-width: 455px;
-  font-size: clamp(14.5px, 1.3vw, 16px);
+  max-width: 440px;
+  margin-inline: auto;
+  font-size: clamp(14.5px, 1.25vw, 16px);
   line-height: 1.8;
   color: #FFF0DF;
-  margin-bottom: 32px;
+  margin-bottom: 30px;
 }
 
 .tati-hero-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: 14px;
 }
 
 .tati-hero-stage {
-  position: relative;
-  height: clamp(360px, 52vh, 520px);
-  border-radius: 26px;
-  background: radial-gradient(circle at 52% 46%, rgba(255, 241, 221, 0.22), rgba(255, 241, 221, 0.04) 68%, transparent 100%);
-  border: 1px solid rgba(255, 241, 221, 0.22);
-  box-shadow: 0 28px 70px -24px rgba(57, 25, 25, 0.45);
-  overflow: hidden;
-}
-
-.tati-hero-stage-caption {
   position: absolute;
-  left: 18px;
-  right: 18px;
-  bottom: 16px;
-  z-index: 4;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 9px 14px;
-  border-radius: 999px;
-  background: rgba(57, 43, 43, 0.28);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 241, 221, 0.24);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ivory);
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: transparent;
 }
 
 .tati-hero-mark {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   margin-top: 28px;
 }
 
@@ -1097,8 +1082,23 @@ canvas {
   transform: translateY(0);
 }
 
+@media (max-width: 1179px) {
+  .tati-hero {
+    min-height: auto;
+    padding-block: clamp(48px, 7vw, 72px) clamp(26px, 4vw, 42px);
+  }
+
+  .tati-hero-stage {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: clamp(290px, 42vw, 356px);
+    margin-top: 6px;
+    pointer-events: auto;
+  }
+}
+
 @media (max-width: 1020px) {
-  .tati-hero-grid,
   .tati-charms-grid,
   .tati-story-split,
   .tati-pdp-grid,
@@ -1170,8 +1170,32 @@ canvas {
     width: 100%;
   }
 
+  .tati-hero {
+    padding-block: 34px 20px;
+  }
+
+  .tati-hero h1 {
+    font-size: clamp(38px, 10.5vw, 48px);
+    margin: 12px 0;
+  }
+
+  .tati-hero-sub {
+    font-size: 14px;
+    line-height: 1.65;
+    margin-bottom: 18px;
+  }
+
+  .tati-hero-actions {
+    gap: 10px;
+  }
+
+  .tati-hero-mark {
+    margin-top: 16px;
+  }
+
   .tati-hero-stage {
-    height: 340px;
+    height: 276px;
+    margin-top: 2px;
   }
 }
 
